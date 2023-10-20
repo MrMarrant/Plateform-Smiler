@@ -18,5 +18,6 @@ namespace Assets.Scripts.Enums
         internal static string CanMove = "CanMove";
         internal static string IsOnWall = "IsOnWall";
         internal static string IsOnCeiling = "IsOnCeiling";
+        internal static string HasTarget = "HasTarget";
     }              
 }
