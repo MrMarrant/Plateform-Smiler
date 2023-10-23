@@ -19,5 +19,8 @@ namespace Assets.Scripts.Enums
         internal static string IsOnWall = "IsOnWall";
         internal static string IsOnCeiling = "IsOnCeiling";
         internal static string HasTarget = "HasTarget";
+        internal static string IsAlive = "IsAlive";
+        internal static string HitTrigger = "HitTrigger";
+        internal static string LockVelocity = "LockVelocity";
     }              
 }

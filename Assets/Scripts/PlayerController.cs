@@ -5,11 +5,12 @@ using Assets.Scripts.Enums;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
 {
     Vector2 moveInput;
     TouchingDirections touchingDirections;
+    public Damageable damageable;
     public float walkSpeed = 8f;
     public float AirSpeed = 4f;
     public float crouchSpeed = 3f;
@@ -39,6 +40,13 @@ public class PlayerController : MonoBehaviour
             _isMoving = value;
             Anim.SetBool(AnimationString.IsMoving, value);
         }
+    }
+
+    [SerializeField]
+    private bool _isAlive = true;
+    public bool IsAlive
+    {
+        get { return Anim.GetBool(AnimationString.IsAlive); }
     }
 
     [SerializeField]
@@ -86,11 +94,12 @@ public class PlayerController : MonoBehaviour
         Rigidbody = GetComponent<Rigidbody2D>();
         Anim = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
+        damageable = GetComponent<Damageable>();
     }
 
     private void FixedUpdate()
     {
-        Rigidbody.velocity = new Vector2(CurrentMoveSpeed * moveInput.x, Rigidbody.velocity.y);
+        if (!damageable.LockVelocity) Rigidbody.velocity = new Vector2(CurrentMoveSpeed * moveInput.x, Rigidbody.velocity.y);
         Anim.SetFloat(AnimationString.YVelocity, Rigidbody.velocity.y);
     }
 
@@ -109,8 +118,12 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-        IsMoving = moveInput != Vector2.zero;
-        SetFacingDirection(moveInput);
+        if (IsAlive)
+        {
+            IsMoving = moveInput != Vector2.zero;
+            SetFacingDirection(moveInput);
+        }
+        else IsMoving = false;
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -140,5 +153,10 @@ public class PlayerController : MonoBehaviour
         {
             IsFacingRight = false;
         }
+    }
+
+    public void OnTakeDamage(float damage, Vector2 knockback)
+    {
+        Rigidbody.velocity = new Vector2 (knockback.x, knockback.y * Rigidbody.velocity.y);
     }
 }

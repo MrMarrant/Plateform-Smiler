@@ -1,22 +1,34 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Enums;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using static MonsterTrash;
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 
 public class MonsterTrash : MonoBehaviour
 {
-
-    public float walkSpeed = 3f;
-    Rigidbody2D body;
-    TouchingDirections touchingDirections;
-    public DetectionZone detectionZone;
     public enum WalkableDirection { Right, Left }
+
+    public float walStopRate = 0.05f;
+    public float walkSpeed = 3f;
+    public DetectionZone detectionZone;
+    public Animator animator;
+    public Damageable damageable;
 
     private WalkableDirection _walkDirection;
     private Vector2 walkDirectionVector = Vector2.right;
+
+    Rigidbody2D body;
+    TouchingDirections touchingDirections;
+    public bool CanMove
+    {
+        get
+        {
+            return animator.GetBool(AnimationString.CanMove);
+        }
+    }
 
     public WalkableDirection WalkDirection {
         get { return _walkDirection; }
@@ -30,18 +42,40 @@ public class MonsterTrash : MonoBehaviour
             _walkDirection = value;
         }
     }
+
+    [SerializeField]
+    private bool _hasTarget = false;
+    public bool HasTarget { 
+        get { return _hasTarget; } 
+        private set {
+            animator.SetBool(AnimationString.HasTarget, value);
+            _hasTarget = value;
+        } 
+    }
+
+    private void Update()
+    {
+        HasTarget = detectionZone.detectedCollider.Count > 0;
+    }
     // Start is called before the first frame update
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         touchingDirections = GetComponent<TouchingDirections>();
+        animator = GetComponent<Animator>();
+        damageable = GetComponent<Damageable>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         if (touchingDirections.IsOnWall && touchingDirections.IsOnGround) FlipDirection();
-        body.velocity = new Vector2(walkDirectionVector.x * walkSpeed, body.velocity.y);
+
+        if (!damageable.LockVelocity)
+        {
+            if (CanMove) body.velocity = new Vector2(walkDirectionVector.x * walkSpeed, body.velocity.y);
+            else body.velocity = new Vector2(Mathf.Lerp(body.velocity.x, 0, walStopRate), body.velocity.y);
+        }
     }
 
     private void FlipDirection()
@@ -52,5 +86,10 @@ public class MonsterTrash : MonoBehaviour
             WalkDirection = WalkableDirection.Right;
         else 
             Debug.LogError("Didnt manage other direction yet");
+    }
+
+    public void OnTakeDamage(float damage, Vector2 knockback)
+    {
+        body.velocity = new Vector2(knockback.x, knockback.y * body.velocity.y);
     }
 }
