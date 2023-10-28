@@ -60,21 +60,50 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ParallaxEffect.cs" />
+    <Compile Include="Assets\Scripts\MonsterTrash\MonsterTrash.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Behaviour\FadeRemoveBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Objects\HealthPickUp.cs" />
+    <Compile Include="Assets\Scripts\ProjectileLauncher.cs" />
     <Compile Include="Assets\Scripts\Damageable.cs" />
-    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Events\CharacterEvent.cs" />
     <Compile Include="Assets\Scripts\Attack.cs" />
+    <Compile Include="Assets\Scripts\UIManager.cs" />
+    <Compile Include="Assets\Scripts\HealthText.cs" />
+    <Compile Include="Assets\Scripts\FlyingEye.cs" />
     <Compile Include="Assets\Tools\SpriteExtractor\Extension\Texture2D\Texture2DExtensions.cs" />
+    <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\Enums\AnimationString.cs" />
     <Compile Include="Assets\Scripts\Behaviour\SetBoolBehaviour.cs" />
     <Compile Include="Assets\Scripts\TouchingDirections.cs" />
     <Compile Include="Assets\Scripts\YouController.cs" />
     <Compile Include="Assets\Scripts\DetectionZone.cs" />
-    <Compile Include="Assets\Scripts\MonsterTrash.cs" />
+    <Compile Include="Assets\Scripts\Behaviour\SetFloatBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\Tools\GIFExtractor\ReadMe.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\Art\Foozle_2DT0001_Science_Fiction_Labs_Tileset\Readme.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\Art\space_background_pack\license.txt" />
   </ItemGroup>
   <ItemGroup>

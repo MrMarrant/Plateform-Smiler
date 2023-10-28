@@ -12,10 +12,13 @@ public class MonsterTrash : MonoBehaviour
     public enum WalkableDirection { Right, Left }
 
     public float walStopRate = 0.05f;
-    public float walkSpeed = 3f;
-    public DetectionZone detectionZone;
-    public Animator animator;
-    public Damageable damageable;
+    public float walkAcceleration = 30f;
+    public float maxSpeed = 3f;
+
+    public DetectionZone attackZone;
+    public DetectionZone cliffDetectionZone;
+    private Animator animator;
+    private Damageable damageable;
 
     private WalkableDirection _walkDirection;
     private Vector2 walkDirectionVector = Vector2.right;
@@ -28,6 +31,10 @@ public class MonsterTrash : MonoBehaviour
         {
             return animator.GetBool(AnimationString.CanMove);
         }
+    }
+    private bool IsAlive
+    {
+        get { return animator.GetBool(AnimationString.IsAlive); }
     }
 
     public WalkableDirection WalkDirection {
@@ -53,9 +60,21 @@ public class MonsterTrash : MonoBehaviour
         } 
     }
 
+    public float AttackCooldown { 
+        get
+        {
+            return animator.GetFloat(AnimationString.AttackCooldown);
+        }
+        private set
+        {
+            animator.SetFloat(AnimationString.AttackCooldown, Mathf.Max(value, 0));
+        }
+    }
+
     private void Update()
     {
-        HasTarget = detectionZone.detectedCollider.Count > 0;
+        HasTarget = attackZone.detectedCollider.Count > 0;
+        if (AttackCooldown> 0 ) AttackCooldown -= Time.deltaTime;
     }
     // Start is called before the first frame update
     void Awake()
@@ -69,11 +88,15 @@ public class MonsterTrash : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (touchingDirections.IsOnWall && touchingDirections.IsOnGround) FlipDirection();
+        if (touchingDirections.IsOnGround && touchingDirections.IsOnWall) FlipDirection();
 
         if (!damageable.LockVelocity)
         {
-            if (CanMove) body.velocity = new Vector2(walkDirectionVector.x * walkSpeed, body.velocity.y);
+            if (CanMove && touchingDirections.IsOnGround)
+            {
+                body.velocity = new Vector2(Mathf.Clamp(body.velocity.x + (walkAcceleration * walkDirectionVector.x * Time.fixedDeltaTime), 
+                    -maxSpeed, maxSpeed), body.velocity.y);
+            }
             else body.velocity = new Vector2(Mathf.Lerp(body.velocity.x, 0, walStopRate), body.velocity.y);
         }
     }
@@ -90,6 +113,11 @@ public class MonsterTrash : MonoBehaviour
 
     public void OnTakeDamage(float damage, Vector2 knockback)
     {
-        body.velocity = new Vector2(knockback.x, knockback.y * body.velocity.y);
+        if (IsAlive) body.velocity = new Vector2(knockback.x, knockback.y * body.velocity.y);
+    }
+
+    public void OnCliffDetected()
+    {
+        if (touchingDirections.IsOnGround) FlipDirection();
     }
 }

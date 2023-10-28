@@ -16,8 +16,8 @@ TagManager:
   - Ennemy
   - PlayerHitBox
   - EnnemyHitBox
-  - 
-  - 
+  - GroundDetection
+  - HealHitBox
   - 
   - 
   - 

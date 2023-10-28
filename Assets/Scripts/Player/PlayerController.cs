@@ -42,8 +42,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private bool _isAlive = true;
     public bool IsAlive
     {
         get { return Anim.GetBool(AnimationString.IsAlive); }
@@ -140,6 +138,13 @@ public class PlayerController : MonoBehaviour
         if (context.started && touchingDirections.IsOnGround) // context.started = Touche Appuyé
         {
             Anim.SetTrigger(AnimationString.AttackTrigger);
+        }
+    }
+    public void OnShootAttack(InputAction.CallbackContext context)
+    {
+        if (context.started && touchingDirections.IsOnGround) // context.started = Touche Appuyé
+        {
+            Anim.SetTrigger(AnimationString.ShootAttackTrigger);
         }
     }
 
