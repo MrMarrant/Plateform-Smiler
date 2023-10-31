@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class YouController : MonoBehaviour
 {
-    public new Camera camera;
+    public Camera camera;
     public Transform TransformYou { get; private set; }
     void Awake()
     {

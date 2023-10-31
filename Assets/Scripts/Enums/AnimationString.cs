@@ -24,5 +24,6 @@ namespace Assets.Scripts.Enums
         internal static string LockVelocity = "LockVelocity";
         internal static string AttackCooldown = "AttackCooldown";
         internal static string ShootAttackTrigger = "ShootAttackTrigger";
+        internal static string CanAttack = "CanAttack";
     }              
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ParallaxEffect : MonoBehaviour
 {
-    public new Camera camera;
+    public Camera camera;
     public Transform followTarget;
 
     // Starting position of the parallax

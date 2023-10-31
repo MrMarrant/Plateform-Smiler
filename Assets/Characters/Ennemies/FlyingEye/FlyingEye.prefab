@@ -127,8 +127,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9084692363588654414}
   - {fileID: 6416029344809285842}
+  - {fileID: 9084692363588654414}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1269229898047048229
@@ -264,6 +264,21 @@ MonoBehaviour:
   OnHeal:
     m_PersistentCalls:
       m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6270623348907795255}
+        m_TargetAssemblyTypeName: FlyingEye, Assembly-CSharp
+        m_MethodName: OnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _maxHealth: 50
   _health: 50
   _isAlive: 1
@@ -303,6 +318,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionZone: {fileID: 8932671634697707074}
+  wayPoints: []
+  wayPointReachedDistance: 0.1
+  flightSpeed: 3
   _hasTarget: 0
 --- !u!1 &6710538795682796704
 GameObject:
@@ -369,7 +387,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.14, y: 0}
+  m_Offset: {x: 0.85020196, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -380,7 +398,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.08, y: 1}
+  m_Size: {x: 0.5004039, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &8932671634697707074
 MonoBehaviour:

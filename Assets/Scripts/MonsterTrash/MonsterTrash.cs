@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Enums;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using static MonsterTrash;
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]

@@ -26,9 +26,12 @@ public class Projectile : MonoBehaviour
         Damageable damageable = entity.GetComponent<Damageable>();
         if (damageable)
         {
-            Vector2 deliveredKnockBack = transform.localScale.x > 0 ? knockback : new Vector2(-knockback.x, knockback.y);
-            damageable.Hit(damage, deliveredKnockBack);
-            Destroy(gameObject);
+            if (damageable.IsAlive)
+            {
+                Vector2 deliveredKnockBack = transform.localScale.x > 0 ? knockback : new Vector2(-knockback.x, knockback.y);
+                damageable.Hit(damage, deliveredKnockBack);
+                Destroy(gameObject);
+            }
         }
     }
 }

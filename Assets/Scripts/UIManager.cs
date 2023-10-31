@@ -4,6 +4,7 @@ using Assets.Scripts.Events;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
@@ -45,5 +46,23 @@ public class UIManager : MonoBehaviour
         TMP_Text tmpText = Instantiate(healthText, spawnPosition, Quaternion.identity, gameCanvas.transform).GetComponent<TMP_Text>();
 
         tmpText.text = heal.ToString();
+    }
+
+    public void OnEscape(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            #if (UNITY_EDITOR || UNITY_BUILD)
+                Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            #endif
+
+            #if (UNITY_EDITOR)
+                UnityEditor.EditorApplication.isPlaying = false;
+            #elif (UNITY_STANDALONE)
+                Application.Quit();
+            #elif (UNITY_WEBGL)
+                SceneManager.LoadScene("QuitScene");
+            #endif
+        }
     }
 }

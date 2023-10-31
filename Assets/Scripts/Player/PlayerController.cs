@@ -87,6 +87,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool CanAttack
+    {
+        get
+        {
+            return Anim.GetBool(AnimationString.CanAttack);
+        }
+    }
+
     void Awake()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
@@ -135,7 +143,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (context.started && touchingDirections.IsOnGround) // context.started = Touche Appuyé
+        if (context.started && CanAttack) // context.started = Touche Appuyé
         {
             Anim.SetTrigger(AnimationString.AttackTrigger);
         }

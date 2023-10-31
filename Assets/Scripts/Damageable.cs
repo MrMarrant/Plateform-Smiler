@@ -10,6 +10,8 @@ public class Damageable : MonoBehaviour
     public Animator animator;
     public UnityEvent<float, Vector2> OnTakeDamage;
     public UnityEvent<float> OnHeal;
+    public UnityEvent OnDeath;
+    public UnityEvent<float, float> HealthChanged;
 
     [SerializeField]
     private float _maxHealth = 100;
@@ -25,8 +27,11 @@ public class Damageable : MonoBehaviour
     {
         get { return _health; }
         set { 
-            _health = Mathf.Clamp(value, 0, MaxHealth); 
-            if (_health <= 0) { IsAlive = false; }
+            _health = Mathf.Clamp(value, 0, MaxHealth);
+            HealthChanged?.Invoke(_health, MaxHealth);
+            if (_health <= 0) { 
+                IsAlive = false;
+            }
         }
     }
 
@@ -39,6 +44,7 @@ public class Damageable : MonoBehaviour
         {
             _isAlive = value;
             animator.SetBool(AnimationString.IsAlive, value);
+            if (!value) OnDeath.Invoke();
         }
     }
 
